@@ -4,12 +4,13 @@ var meta = {
     program : 'adb',
     name : 'Android Debug Bridge',
     version : '1.0.3',
+    subcommands : [ 'connect', 'disconnect', 'shell', 'push', 'pull', 'install', 'uninstall' ], 
     options : {
-        subcommands : [ 'connect', 'disconnect', 'shell', 'push', 'pull' ], 
         flags : [
             [ 'h', 'help', 'print program usage' ],
-            [ 'v', 'version', 'print program version' ],
-            [ 'l', 'localhost', 'localhost' ]
+            [ 'l', 'localhost', 'localhost' ],
+            [ 'r', 'reinstall', 'reinstall package' ],
+            [ 'v', 'version', 'print program version' ]
         ],
         parameters : [
             [ null, 'host', 'adb server hostname or IP address', null ],
@@ -25,8 +26,8 @@ var meta = {
         [ 'pull', null, ['src', 'dest'], 'pull file from adb server', adb_pull ],
         [ 'install', ['r'], ['package'], 'install package', adb_install ],
         [ 'uninstall', null, ['pkg-name'], 'uninstall package', adb_uninstall ],
-        [ null, ['h'], null, adb_help, 'help' ],
-        [ null, null, null, adb_help, 'help' ]
+        [ null, ['h'], null, 'help', adb_help ],
+        [ null, null, null, 'help', adb_help ]
     ]
 };
 
@@ -37,7 +38,7 @@ try {
     //var help = parser.help();
     //console.log(help);
 
-    //parser.parse(['-h']);
+    parser.parse(['-h']);
 
     //parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036']);
     //parser.parse(['connect', '--host', '10.69.2.186', '-p', '5036']);

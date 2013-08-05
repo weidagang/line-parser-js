@@ -229,7 +229,7 @@ function lineparser(meta) {
             s += ' ' + meta.version
         }
         s += '\n\n';
-        s += 'Usages:\n';
+        s += 'Usage: ' + meta.program + ' [<subcommand>] [options...] [args...]\n\n';
 
         meta.usages.forEach(function(u, i, usages) {
             var descr = mm.usage_attr_value(u, 'description');
