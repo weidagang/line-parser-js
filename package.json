@@ -1,0 +1,30 @@
+{
+  "name": "lineparser",
+  "version": "0.9.0",
+  "description": "A meta driven command line parser for Node.js",
+  "main": "lineparser.js",
+  "scripts": {
+    "test": "test_lineparser.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/weidagang/line-parser-js.git"
+  },
+  "keywords": [
+    "command line",
+    "arguments",
+    "options",
+    "parser",
+    "argparser",
+    "argsparser",
+    "optparser",
+    "cmdparser",
+    "optimist",
+    "commander"
+  ],
+  "author": "dagang.wei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weidagang/line-parser-js/issues"
+  }
+}
