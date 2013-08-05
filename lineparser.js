@@ -139,8 +139,8 @@ function meta_manager(meta) {
     };
 }
 
-// lineparser
-function lineparser(meta) {
+// lineparser 
+function init(meta) {
     var mm = meta_manager(meta);
     
     function _check_meta_options() {
@@ -443,4 +443,4 @@ function lineparser(meta) {
 }
 
 
-exports.lineparser = lineparser;
+exports.init = init;

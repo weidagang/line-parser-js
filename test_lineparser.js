@@ -33,7 +33,7 @@ var meta = {
 
 try {
     var lineparser = require('./lineparser');
-    var parser = lineparser.lineparser(meta);
+    var parser = lineparser.init(meta);
 
     var help = parser.help();
     console.log(help);
