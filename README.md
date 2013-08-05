@@ -6,7 +6,7 @@ A meta driven command line parser for Node.js
 ```javascript
 #!/usr/bin/env node
 
-// use DSL in JSON to define the meta data for the command line specification
+// use DSL in JSON to define the command line specification
 var meta = {
     program : 'adb',
     name : 'Android Debug Bridge',
