@@ -31,8 +31,8 @@ var meta = {
         [ 'pull', null, ['src', 'dest'], 'pull file from adb server', adb_pull ],
         [ 'install', ['r'], ['package'], 'install package', adb_install ],
         [ 'uninstall', null, ['pkg-name'], 'uninstall package', adb_uninstall ],
-        [ null, ['h'], null, adb_help, 'help' ],
-        [ null, null, null, adb_help, 'help' ]
+        [ null, ['h'], null, 'help', adb_help ],
+        [ null, null, null, 'help', adb_help ]
     ]
 };
 
