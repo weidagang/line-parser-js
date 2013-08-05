@@ -10,8 +10,8 @@ var meta = {
     program : 'adb',
     name : 'Android Debug Bridge',
     version : '1.0.3',
+    subcommands : [ 'connect', 'disconnect', 'shell', 'push', 'pull', 'install', 'uninstall' ], 
     options : {
-        subcommands : [ 'connect', 'disconnect', 'shell', 'push', 'pull' ], 
         flags : [
             [ 'h', 'help', 'print program usage' ],
             [ 'v', 'version', 'print program version' ],
