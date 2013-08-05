@@ -35,18 +35,16 @@ try {
     var lineparser = require('./lineparser');
     var parser = lineparser.lineparser(meta);
 
-    //var help = parser.help();
-    //console.log(help);
+    var help = parser.help();
+    console.log(help);
 
     parser.parse(['-h']);
-
-    //parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036']);
-    //parser.parse(['connect', '--host', '10.69.2.186', '-p', '5036']);
+    parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036']);
+    parser.parse(['connect', '--host', '10.69.2.186', '-p', '5036']);
     parser.parse(['connect', '--host', '10.69.2.186']);
-
-    //parser.parse(['install', '-r', '/pkgs/bird.apk']);
-
-    //parser.parse(['push', '/pkgs/bird.apk', '/data/tmp']);
+    parser.parse(['install', '-r', '/pkgs/bird.apk']);
+    parser.parse(['push', '/pkgs/bird.apk', '/data/tmp']);
+    parser.parse(['shell', 'ls', '-l', '/data/tmp']);
 }
 catch (e) {
     console.error(e);

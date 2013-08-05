@@ -340,50 +340,57 @@ function lineparser(meta) {
             }
             
             // parse command line argv
+            var is_arg = false;
             for (var i = (has_subcmd ? 1 : 0); i < argv.length; ++i) {
-                // check if argv[i] is an option
-                var opt_name = null;
-                if (argv[i].length > 2 && 0 == argv[i].indexOf('--')) {
-                    opt_name = argv[i].substr(2);
-                }
-                else if (argv[i].length > 1 && 0 == argv[i].indexOf('-')) {
-                    opt_name = argv[i].substr(1);
-                }
-                
-                if (null != opt_name) {
-                    var alias = mm.opt_alias(opt_name);
-                    if (mm.is_param(opt_name)) {
-                        if (i + 1 < argv.length) {
-                            if (null == r.parameters[opt_name]) {
-                                r.parameters[opt_name] = argv[i+1];
-                                if (alias) {
-                                    r.parameters[alias] = argv[i+1];
-                                }
-                            }
-                            else if (r.parameters[opt_name] instanceof Array) {
-                                r.parameters[opt_name].push(argv[i+1]);
-                                if (alias) {
-                                    r.parameters[alias].push(argv[i+1]);
-                                }
-                            }
-                            else {
-                                r.parameters[opt_name] = [r.parameters[opt_name], argv[i+1]];
-                                if (alias) {
-                                    r.parameters[alias] = [r.parameters[alias], argv[i+1]];
-                                }
-                            }
-                            ++i;
-                        }
-                    }
-                    else if (mm.is_flag(opt_name)) {
-                        r.flags[opt_name] = true;
-                        if (alias) {
-                            r.flags[alias] = true;
-                        }
-                    }
+                if (is_arg) {
+                    r.args.push(argv[i]);
                 }
                 else {
-                    r.args.push(argv[i]);
+                    // check if argv[i] is an option
+                    var opt_name = null;
+                    if (argv[i].length > 2 && 0 == argv[i].indexOf('--')) {
+                        opt_name = argv[i].substr(2);
+                    }
+                    else if (argv[i].length > 1 && 0 == argv[i].indexOf('-')) {
+                        opt_name = argv[i].substr(1);
+                    }
+                    
+                    if (null != opt_name) {
+                        var alias = mm.opt_alias(opt_name);
+                        if (mm.is_param(opt_name)) {
+                            if (i + 1 < argv.length) {
+                                if (null == r.parameters[opt_name]) {
+                                    r.parameters[opt_name] = argv[i+1];
+                                    if (alias) {
+                                        r.parameters[alias] = argv[i+1];
+                                    }
+                                }
+                                else if (r.parameters[opt_name] instanceof Array) {
+                                    r.parameters[opt_name].push(argv[i+1]);
+                                    if (alias) {
+                                        r.parameters[alias].push(argv[i+1]);
+                                    }
+                                }
+                                else {
+                                    r.parameters[opt_name] = [r.parameters[opt_name], argv[i+1]];
+                                    if (alias) {
+                                        r.parameters[alias] = [r.parameters[alias], argv[i+1]];
+                                    }
+                                }
+                                ++i;
+                            }
+                        }
+                        else if (mm.is_flag(opt_name)) {
+                            r.flags[opt_name] = true;
+                            if (alias) {
+                                r.flags[alias] = true;
+                            }
+                        }
+                    }
+                    else {
+                        r.args.push(argv[i]);
+                        is_arg = true;
+                    }
                 }
             }
             
