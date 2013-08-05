@@ -3,7 +3,7 @@ line-parser-js
 
 A meta driven command line parser for Node.js
 
-
+```javascript
     #!/usr/bin/env node
 
     var meta = {
@@ -106,3 +106,4 @@ A meta driven command line parser for Node.js
         console.log('Uninstall package ' + r.args[0]); 
     }
 
+```
