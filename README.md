@@ -57,7 +57,7 @@ try {
     parser.parse(['shell', 'ls', '-l', '/data/data/']);
 }
 catch (e) {
-    // exception will be thrown if there're errror with the meta data
+    // exception will be thrown if there's an error with the meta data
     console.error(e);
 }
 
