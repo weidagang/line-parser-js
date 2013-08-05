@@ -1,6 +1,6 @@
 {
   "name": "lineparser",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A meta driven command line parser for Node.js",
   "main": "lineparser.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "arguments",
     "options",
     "parser",
+    "getopt",
     "argparser",
     "argsparser",
     "optparser",
