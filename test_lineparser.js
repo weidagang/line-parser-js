@@ -18,7 +18,7 @@ var meta = {
     },
     usages : [
         [ 'connect', ['host', '[port]'], null, 'connect to adb server', adb_connect ],
-        [ 'connect', [ 'l' ], null, 'connect to adb server on localhost', adb_connect ],
+        [ 'connect', [ 'l' ], null, 'connect to the local adb server', adb_connect ],
         [ 'disconnect', null, null, 'disconnect from adb server', adb_disconnect ],
         [ 'shell', null, ['[cmd]'], 'run shell commands', adb_shell ],
         [ 'push', null, ['src', 'dest'], 'push file to adb server', adb_push ],
