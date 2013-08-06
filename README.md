@@ -1,4 +1,4 @@
-lineparser.js: A meta driven command line parser for Node.js
+A meta driven command line parser for Node.js
 ===========================================================
 
 ```javascript
