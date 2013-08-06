@@ -1,8 +1,16 @@
 LineParser.js
 =================================
 
-LineParser is a meta driven command line parser. The highlight is the JSON based DSL for command line specification. 
-Compared with fluent interface based DSL, JSON is more poweful, concise, and friendly with Javascript. 
+LineParser is a meta driven command line parser. 
+
+Features
+--------
+
+* JSON based meta data for command line specification
+* Support usage pattern matching
+* Support subcommand
+* Support multiple occurrences of the same option
+* Support help info
 
 ```javascript
 #!/usr/bin/env node
