@@ -143,12 +143,38 @@ function meta_manager(meta) {
 function init(meta) {
     var mm = meta_manager(meta);
     
-    function _check_meta_options() {
-        if (null == meta.options) {
-            throw new Error('Meta data options is ' + meta.options);
+    function _is_blank(str) {
+        for (var i = 0; null != str && i < str.length; ++i) {
+            if (' ' != str.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function _check_meta_subcmds() {
+        if (null == meta.subcommands) {
+            meta.subcommands = [];
         }
 
-        (null == meta.options.flags) && (meta.options.flags = []);
+        if (! meta.subcommands instanceof Array) {
+            throw new Error('Invalid subcommands definition, type: ' + typeof(meta.subcommands)); 
+        }
+
+        for (var i = 0; i < meta.subcommands.length; ++i) {
+            var subcmd = meta.subcommands[i]; 
+            if (_is_blank(subcmd)) {
+                throw new Error('Invalid subcommand "' + subcmd + '"'); 
+            }
+        }
+
+        return true;
+    }
+
+    function _check_meta_options() {
+        if (null == meta.options) meta.options = {};
+        if (null == meta.options.flags) meta.options.flags = [];
+        if (null == meta.options.parameters) meta.options.parameters = [];
         
         // options.flags
         for (var i = 0; i < meta.options.flags.length; ++i) {
@@ -156,23 +182,19 @@ function init(meta) {
 
             // check flag type
             if (! flag instanceof Array) {
-                console.error('Invalid flag definition: ', flag);
                 throw new Error('Invalid flag definition, type: ' + typeof(flag));
             }
 
             // check name
             var short_name = mm.flag_attr_value(flag, 'short_name');
             var name = mm.flag_attr_value(flag, 'name');
-            if (null == short_name && null == name) {
-                console.error('Invalid flag definition: ', flag);
+            if (_is_blank(short_name) && _is_blank(name)) {
                 throw new Error("Flag name can't be empty");
             }
             if (null != short_name && 1 != short_name.length) {
-                console.error('Invalid flag short name: ', short_name);
                 throw new Error('Invalid flag short name: ' + short_name);
             }
             if (null != name && name.length <= 1) {
-                console.error('Invalid flag name: ', name);
                 throw new Error('Invalid flag name: ' + name);
             }
         }
@@ -183,7 +205,6 @@ function init(meta) {
 
             // check flag type
             if (! param instanceof Array) {
-                console.error('Invalid parameter definition: ', param);
                 throw new Error('Invalid parameter definition, type: ' + typeof(param));
             }
 
@@ -191,15 +212,12 @@ function init(meta) {
             var short_name = mm.param_attr_value(param, 'short_name');
             var name = mm.param_attr_value(param, 'name');
             if (null == short_name && null == name) {
-                console.error('Invalid parameter definition: ', param);
                 throw new Error("Parameter name must not be empty");
             }
             if (null != short_name && 1 != short_name.length) {
-                console.error('Invalid parameter short name: ', short_name);
                 throw new Error('Invalid parameter short name: ' + short_name);
             }
             if (null != name && name.length <= 1) {
-                console.error('Invalid parameter name: ', name);
                 throw new Error('Invalid parameter name: ' + name);
             }
         }
@@ -226,10 +244,8 @@ function init(meta) {
 
         if (null == meta.program) meta.program = process.argv[1];
         if (null == meta.name) meta.name = meta.program;
-        if (null == meta.subcommands) meta.subcommands = [];
-        if (null == meta.options.flags) meta.options.flags = [];
-        if (null == meta.options.parameters) meta.options.parameters = [];
-        
+
+        _check_meta_subcmds(); 
         _check_meta_options();
         _check_meta_usages();
 
