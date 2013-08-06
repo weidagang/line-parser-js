@@ -1,5 +1,5 @@
-A meta driven command line parser for Node.js
-===========================================================
+A Meta Driven Command Line Parser
+=================================
 
 ```javascript
 #!/usr/bin/env node
