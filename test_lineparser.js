@@ -23,6 +23,7 @@ var meta = {
         [ 'shell', null, ['[cmd]'], 'run shell commands', adb_shell ],
         [ 'push', null, ['src', 'dest'], 'push file to adb server', adb_push ],
         [ 'install', ['r'], ['package'], 'install package', adb_install ],
+        //[ 'uninstall', null, ['package'], 'uninstall package', adb_uninstall ],
         [ null, ['h'], null, 'help', adb_help ],
         [ null, null, null, 'help', adb_help ]
     ]
@@ -93,3 +94,6 @@ function adb_install(r) {
     console.log('Install package ' + r.args[0] + ', reinstall: ' + r.flags.r); 
 }
 
+function adb_uninstall(r) {
+    console.log('Uninstall package ' + r.args[0]); 
+}

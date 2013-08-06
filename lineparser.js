@@ -205,20 +205,33 @@ function init(meta) {
         }
     }
 
-    function _init(meta) {
+    function _check_meta_usages() {
+        if (null == meta.usages || 0 == meta.usages.length) {
+            throw new Error("Usages can't be null or empty");
+        }
+
+        for (var i = 0; i < meta.usages.length; ++i) {
+            var usage = meta.usages[i]; 
+            var subcmd = mm.usage_attr_value(usage, 'subcommand');
+            if (null != subcmd && -1 == meta.subcommands.indexOf(subcmd)) {
+                throw new Error('Undefined subcommand "' + subcmd + '"');
+            }
+        }
+    }
+
+    function _validate(meta) {
         if (null == meta) {
             throw new Error('Meta data is ' + meta);
         }
 
-        (null == meta.program) && (meta.program = process.argv[1]);
-        (null == meta.name) && (meta.name = meta.program);
-        (null == meta.options.parameters) && (meta.options.parameters = []);
+        if (null == meta.program) meta.program = process.argv[1];
+        if (null == meta.name) meta.name = meta.program;
+        if (null == meta.subcommands) meta.subcommands = [];
+        if (null == meta.options.flags) meta.options.flags = [];
+        if (null == meta.options.parameters) meta.options.parameters = [];
         
         _check_meta_options();
-             
-        if (null == meta.usages || 0 == meta.usages.length) {
-            return false;
-        }
+        _check_meta_usages();
 
         return true
     }
@@ -249,7 +262,7 @@ function init(meta) {
                     var optional = ('[' == opt_name.charAt(0) && ']' == opt_name.charAt(opt_name.length-1));
                     optional && (opt_name = opt_name.substr(1, opt_name.length - 2));
                     if (null == opt_name) {
-                        throw new Error('Undefined option: ' + opt_name);
+                        throw new Error('Undefined option "' + opt_name + '"');
                     }
                     else {
                         var str = (opt_name.length > 1 ? '--' : '-');
@@ -267,7 +280,7 @@ function init(meta) {
                             str += opt_name + '=<' + full_name + '>';
                         }
                         else {
-                            throw new Error('Undefined option: ' + opt_name);
+                            throw new Error('Undefined option "' + opt_name + '"');
                         }
                         optional ? (s += ' [' + str + ']') : (s += ' ' + str);
                     }
@@ -436,7 +449,7 @@ function init(meta) {
         }
     }
     
-    return !_init(meta) ? null : {
+    return !_validate(meta) ? null : {
         help : _help,
         parse : _parse
     };
