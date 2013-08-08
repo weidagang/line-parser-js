@@ -266,7 +266,7 @@ function init(meta) {
             var options = mm.usage_attr_value(u, 'options');
             var args = mm.usage_attr_value(u, 'args');
 
-            s += '' + (i + 1) + ". " + descr + '\n';
+            s += '' + (i + 1) + ". " + (null != descr ? descr : '') + '\n';
             s += meta.program;
 
             if (subcmd) {
