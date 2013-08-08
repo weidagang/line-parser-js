@@ -4,11 +4,11 @@ LineParser.js
 LineParser is a meta driven command line parser. 
 
 ### Features
-* JSON based meta data for command line specification
-* Support usage pattern matching
-* Support subcommand
-* Support multiple occurrences of an option, e.g. grep -e foo -e bar 
-* Support help info
+* Command line specification with meta data in JSON
+* Usage pattern matching
+* Subcommand
+* Multiple occurrences of an option, e.g. grep -e foo -e bar 
+* Help info
 
 ### Sample
 
