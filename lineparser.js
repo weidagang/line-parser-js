@@ -293,7 +293,7 @@ function init(meta) {
                             else {
                                 full_name = opt_name;
                             }
-                            str += opt_name + '=<' + full_name + '>';
+                            str += opt_name + ' <' + full_name + '>';
                         }
                         else {
                             throw new Error('Undefined option "' + opt_name + '"');
