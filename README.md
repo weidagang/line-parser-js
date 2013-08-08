@@ -7,7 +7,7 @@ LineParser is a meta driven command line parser.
 * JSON based meta data for command line specification
 * Support usage pattern matching
 * Support subcommand
-* Support multiple occurrences of the same option, e.g. grep -e foo -e bar 
+* Support multiple occurrences of an option, e.g. grep -e foo -e bar 
 * Support help info
 
 ### Sample
