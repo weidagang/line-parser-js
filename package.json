@@ -14,6 +14,7 @@
     "command line",
     "arguments",
     "options",
+    "subcommand",
     "parser",
     "getopt",
     "argparser",
@@ -21,6 +22,7 @@
     "optparser",
     "cmdparser",
     "optimist",
+    "comfort",
     "commander"
   ],
   "author": "dagang.wei",
