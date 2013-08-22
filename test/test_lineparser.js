@@ -30,7 +30,7 @@ var meta = {
 };
 
 try {
-    var lineparser = require('./lineparser.js');
+    var lineparser = require('../lineparser.js');
     var parser = lineparser.init(meta);
 
     // print help
