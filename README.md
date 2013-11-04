@@ -15,7 +15,7 @@ LineParser is a meta driven command line parser.
 ```javascript
 #!/usr/bin/env node
 
-// use DSL in JSON to define the command line specification
+// use meta data in JSON to define the command line specification
 var meta = {
     program : 'adb',
     name : 'Android Debug Bridge',
