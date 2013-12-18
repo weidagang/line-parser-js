@@ -1,10 +1,10 @@
 LineParser.js
 =================================
 
-LineParser is a meta driven command line parser. 
+LineParser is a meta-data driven command line parser. 
 
 ### Features
-* Command line specification with meta data in JSON
+* Command line specification with meta-data in JSON
 * Usage pattern matching
 * Subcommand
 * Multiple occurrences of an option, e.g. grep -e foo -e bar 
@@ -15,7 +15,7 @@ LineParser is a meta driven command line parser.
 ```javascript
 #!/usr/bin/env node
 
-// use meta data in JSON to define the command line specification
+// use meta-data in JSON to define the command line specification
 var meta = {
     program : 'adb',
     name : 'Android Debug Bridge',
