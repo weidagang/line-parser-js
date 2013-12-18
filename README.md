@@ -23,16 +23,19 @@ var meta = {
     subcommands : [ 'connect', 'disconnect', 'shell', 'push', 'install' ], 
     options : {
         flags : [
+            /* short_name, name, description */
             [ 'h', 'help', 'print program usage' ],
             [ 'r', 'reinstall', 'reinstall package' ],
             [ 'l', 'localhost', 'localhost' ]
         ],
         parameters : [
+            /* short_name, name, description, default_value */
             [ null, 'host', 'adb server hostname or IP address', null ],
             [ 'p', 'port', 'adb server port', 5037 ]
         ]
     },
     usages : [
+        /* subcommand, options, positional-arguments, description, handler */
         [ 'connect', ['host', '[port]'], null, 'connect to adb server', adb_connect ],
         [ 'connect', [ 'l' ], null, 'connect to the local adb server', adb_connect ],
         [ 'disconnect', null, null, 'disconnect from adb server', adb_disconnect ],
@@ -54,7 +57,7 @@ try {
     console.log(help);
 
     // the handler adb_connect will be invoked
-    parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036']);
+    parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036'], "I'm a token");
     
     // the handler adb_install will be invoked
     parser.parse(['install', '-r', '/pkgs/bird.apk']);
@@ -71,24 +74,26 @@ catch (e) {
 }
 
 // callbacks for various usages
-function adb_help(r) {
+function adb_help(r, token) {
     console.log(r.help());
 }
 
-function adb_connect(r) {
+function adb_connect(r, token) {
     if (r.flags.l) {
         console.log('Connect to localhost:5037'); 
     }
     else {
         console.log('Connect to ' + r.parameters.host + ':' + r.parameters.p); 
     }
+
+    console.log('Token: ' + token);
 }
 
-function adb_disconnect(r) {
+function adb_disconnect(r, token) {
     console.log('Disconnect'); 
 }
 
-function adb_shell(r) {
+function adb_shell(r, token) {
     if (0 == r.args) {
         console.log('Enter adb shell');
     }
@@ -101,11 +106,11 @@ function adb_shell(r) {
     }
 }
 
-function adb_push(r) {
+function adb_push(r, token) {
     console.log('Push file ' + r.args[0] + ' to ' + r.args[1]); 
 }
 
-function adb_install(r) {
+function adb_install(r, token) {
     console.log('Install package ' + r.args[0] + ', reinstall: ' + r.flags.r); 
 }
 ```

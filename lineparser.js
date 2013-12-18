@@ -314,7 +314,7 @@ function init(meta) {
         return s;
     }
 
-    function _parse(argv, callback) {
+    function _parse(argv, token) {
         var i;
 
         // use command line args by default
@@ -332,7 +332,7 @@ function init(meta) {
             if (r.matched) {
                 var handler = mm.usage_attr_value(usage, 'handler');
                 r.help = _help;
-                handler(r, callback);
+                handler(r, token);
                 break;
             }
         }
