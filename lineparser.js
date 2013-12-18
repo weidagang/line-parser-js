@@ -3,7 +3,7 @@ var flag_attrs = ['short_name', 'name', 'description'];
 var param_attrs = ['short_name', 'name', 'description', 'default'];
 var usage_attrs = ['subcommand', 'options', 'args', 'description', 'handler'];
 
-// meta manager 
+// meta manager
 function meta_manager(meta) {
     // init
     flag_attr_idx = {};
@@ -20,7 +20,7 @@ function meta_manager(meta) {
     for (var i = 0; i < usage_attrs.length; ++i) {
         usage_attr_idx[usage_attrs[i]] = i;
     }
-    
+
     // internal functions definitions
     function _flag_attr_value(flag, attr_name) {
         return flag_attr_idx[attr_name] >= 0 ? flag[flag_attr_idx[attr_name]] : null;
@@ -48,7 +48,7 @@ function meta_manager(meta) {
                 return { type : 'parameter', data : param };
             }
         };
-        
+
         return null;
     }
 
@@ -70,7 +70,7 @@ function meta_manager(meta) {
     }
 
     function _is_flag(name) {
-        if (null == name) return false; 
+        if (null == name) return false;
         var opt = _get_opt(name);
         return null != opt && 'flag' == opt.type;
     }
@@ -82,10 +82,10 @@ function meta_manager(meta) {
     }
 
     function _opt_full_name(name) {
-        var opt = _get_opt(name); 
+        var opt = _get_opt(name);
         var full_name = null;
 
-        if (null != opt) { 
+        if (null != opt) {
             if ('flag' == opt.type) {
                 full_name =_flag_attr_value(opt.data, 'name');
             }
@@ -93,15 +93,15 @@ function meta_manager(meta) {
                 full_name = _param_attr_value(opt.data, 'name');
             }
         }
-        
+
         return full_name;
     }
 
     function _opt_short_name(name) {
-        var opt = _get_opt(name); 
+        var opt = _get_opt(name);
         var short_name = null;
 
-        if (null != opt) { 
+        if (null != opt) {
             if ('flag' == opt.type) {
                 short_name =_flag_attr_value(opt.data, 'short_name');
             }
@@ -109,7 +109,7 @@ function meta_manager(meta) {
                 short_name = _param_attr_value(opt.data, 'short_name');
             }
         }
-        
+
         return short_name;
     }
 
@@ -139,10 +139,10 @@ function meta_manager(meta) {
     };
 }
 
-// lineparser 
+// lineparser
 function init(meta) {
     var mm = meta_manager(meta);
-    
+
     function _is_blank(str) {
         for (var i = 0; null != str && i < str.length; ++i) {
             if (' ' != str.charAt(i)) {
@@ -158,13 +158,13 @@ function init(meta) {
         }
 
         if (! meta.subcommands instanceof Array) {
-            throw new Error('Invalid subcommands definition, type: ' + typeof(meta.subcommands)); 
+            throw new Error('Invalid subcommands definition, type: ' + typeof(meta.subcommands));
         }
 
         for (var i = 0; i < meta.subcommands.length; ++i) {
-            var subcmd = meta.subcommands[i]; 
+            var subcmd = meta.subcommands[i];
             if (_is_blank(subcmd)) {
-                throw new Error('Invalid subcommand "' + subcmd + '"'); 
+                throw new Error('Invalid subcommand "' + subcmd + '"');
             }
         }
 
@@ -175,7 +175,7 @@ function init(meta) {
         if (null == meta.options) meta.options = {};
         if (null == meta.options.flags) meta.options.flags = [];
         if (null == meta.options.parameters) meta.options.parameters = [];
-        
+
         // options.flags
         for (var i = 0; i < meta.options.flags.length; ++i) {
             var flag = meta.options.flags[i];
@@ -229,7 +229,7 @@ function init(meta) {
         }
 
         for (var i = 0; i < meta.usages.length; ++i) {
-            var usage = meta.usages[i]; 
+            var usage = meta.usages[i];
             var subcmd = mm.usage_attr_value(usage, 'subcommand');
             if (null != subcmd && -1 == meta.subcommands.indexOf(subcmd)) {
                 throw new Error('Undefined subcommand "' + subcmd + '"');
@@ -245,7 +245,7 @@ function init(meta) {
         if (null == meta.program) meta.program = process.argv[1];
         if (null == meta.name) meta.name = meta.program;
 
-        _check_meta_subcmds(); 
+        _check_meta_subcmds();
         _check_meta_options();
         _check_meta_usages();
 
@@ -253,7 +253,7 @@ function init(meta) {
     }
 
     function _help() {
-        var s = meta.name; 
+        var s = meta.name;
         if (meta.version) {
             s += ' ' + meta.version
         }
@@ -314,7 +314,7 @@ function init(meta) {
         return s;
     }
 
-    function _parse(argv) {
+    function _parse(argv, callback) {
         var i;
 
         // use command line args by default
@@ -325,14 +325,14 @@ function init(meta) {
         if (! argv instanceof Array) {
             throw new Error('Invalid arguments type: ' + typeof(argv));
         }
-        
+
         for (i = 0; i < meta.usages.length; ++i) {
             var usage = meta.usages[i];
             var r = _match_usage(usage, argv);
             if (r.matched) {
                 var handler = mm.usage_attr_value(usage, 'handler');
                 r.help = _help;
-                handler(r); 
+                handler(r, callback);
                 break;
             }
         }
@@ -367,7 +367,7 @@ function init(meta) {
                 r.subcommand = subcmd;
                 has_subcmd = true;
             }
-            
+
             // parse command line argv
             var is_arg = false;
             for (var i = (has_subcmd ? 1 : 0); i < argv.length; ++i) {
@@ -383,7 +383,7 @@ function init(meta) {
                     else if (argv[i].length > 1 && 0 == argv[i].indexOf('-')) {
                         opt_name = argv[i].substr(1);
                     }
-                    
+
                     if (null != opt_name) {
                         var alias = mm.opt_alias(opt_name);
                         if (mm.is_param(opt_name)) {
@@ -422,7 +422,7 @@ function init(meta) {
                     }
                 }
             }
-            
+
             // try to match args against the usage pattern
             var usage_options = (null == usage[1] ? [] : usage[1]);
             for (var i = 0; i < usage_options.length; ++i) {
@@ -430,14 +430,14 @@ function init(meta) {
                 var optional = _is_optional(usage_opt);
                 var opt_name = unwrap_name(usage_opt);
                 var is_param = mm.is_param(opt_name);
-                
+
                 if (!optional) {
                     if (is_param) {
                         if (null == r.parameters[opt_name]) {
-                            return r;  
+                            return r;
                         }
                     }
-                    else { 
+                    else {
                         if (null == r.flags[opt_name]) {
                             return r;
                         }
@@ -445,8 +445,8 @@ function init(meta) {
                 }
                 else {
                     if (is_param && null == r.parameters[opt_name]) {
-                        var default_value = (1 == opt_name.length 
-                            ? mm.query_attr_value('default', 'short_name', opt_name) 
+                        var default_value = (1 == opt_name.length
+                            ? mm.query_attr_value('default', 'short_name', opt_name)
                             : mm.query_attr_value('default', 'name', opt_name)
                         );
                         if (null != default_value) {
@@ -464,7 +464,7 @@ function init(meta) {
             return r;
         }
     }
-    
+
     return !_validate(meta) ? null : {
         help : _help,
         parse : _parse
