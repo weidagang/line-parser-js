@@ -57,7 +57,7 @@ try {
     console.log(help);
 
     // the handler adb_connect will be invoked
-    parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036'], "I'm a token");
+    parser.parse(['connect', '--host', '10.69.2.186', '--port', '5036'], "I'm token");
     
     // the handler adb_install will be invoked
     parser.parse(['install', '-r', '/pkgs/bird.apk']);
