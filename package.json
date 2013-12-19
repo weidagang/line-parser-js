@@ -1,7 +1,7 @@
 {
   "name": "lineparser",
   "version": "0.9.8",
-  "description": "A meta driven command line parser for Node.js",
+  "description": "A meta-data driven command line parser for Node.js",
   "main": "lineparser.js",
   "scripts": {
     "test": "test_lineparser.js"
