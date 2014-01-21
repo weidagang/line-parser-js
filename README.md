@@ -10,7 +10,7 @@ LineParser is a meta-data driven command line parser.
 * Multiple occurrences of an option, e.g. grep -e foo -e bar 
 * Help info
 
-### Sample
+### Example
 
 ```javascript
 #!/usr/bin/env node
